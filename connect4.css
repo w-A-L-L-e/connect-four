@@ -1,0 +1,77 @@
+body {
+  background-color: #16151d;
+  color: blue;
+  margin: auto;
+}
+
+.gamestatus{
+  float: left;
+  width: 300px;
+}
+
+.title{
+  font-size: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#status{
+  font-size: 48px;
+  text-align: center;
+  height: 80px;
+  color: white;
+  text-shadow: 2px 2px #000000;
+}
+
+#current_player {
+  text-align: center;
+  margin: auto;
+}
+
+#current_player .label {
+  color: black;
+  font-size: 20px;
+  padding-top: 31px;
+  color: white;
+  font-size: 22px;
+  text-shadow: 1px 1px #000000;
+}
+
+.board {
+  float: left;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 710px;
+}
+
+
+.column {
+  padding-top: 15px;
+  width: 100px;
+  height: 590px;
+  float: left;
+  background-color: blue;
+}
+
+.cell {
+  width: 90px;
+  height: 90px;
+  background-color: #16151d;
+  border-radius: 50%;
+  margin-left: 4px;
+  margin-top: 4px;
+  transition: background-color 0.3s;
+}
+
+.cell.player1 {
+  background-color: #ce1313;
+}
+
+.cell.player2 {
+  background-color: #ffe001;
+}
+
+
