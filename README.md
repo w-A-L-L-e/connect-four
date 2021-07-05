@@ -17,6 +17,6 @@ Did some random browsing and saw a video from Ania Kubow about creating connect 
 But her static array gamechecking routine looks like the wrong approach. Also the gui and not being able to click anywhere in a column annoyed me and my son when
 we tried to play it.
 
-Wrote my own version from scratch in a couple of hours. And played it with my sun Noah Schreppers. He suggested adding specials and animations etc.
+Wrote my own version from scratch in a couple of hours. And played it with my son Noah Schreppers. He suggested adding specials and animations etc.
 Added some of them like animating a win and a tie nicely. Might add some more of those in the near future ;).
 
