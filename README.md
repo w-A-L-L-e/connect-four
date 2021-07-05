@@ -19,3 +19,5 @@ Unfortunately her static array gamechecking routine (basically a lookup table co
 Wrote my own version from scratch in a couple of hours and then played it with my son Noah Schreppers. He suggested adding specials and animations etc.
 Added some of them like animating a win and a tie nicely. Might add some more of those in the near future as he's now hooked on the game ;).
 
+## Play it online
+Deployed it here: https://walter.schreppers.com/connect-four/index.html
