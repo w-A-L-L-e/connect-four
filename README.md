@@ -20,5 +20,3 @@ we tried to play it.
 Wrote my own version from scratch in a couple of hours. And played it with my sun Noah Schreppers. He suggested adding specials and animations etc.
 Added some of them like animating a win and a tie nicely. Might add some more of those in the near future ;).
 
-The checkPlayerWins is the meat of the algorithm (also it can be further shortened now, I added 8 directions but during playing we noticed we had to cover an edgecase in checkDirection. Fixed it by first walking to end and then doing the direction check. This however also allows further slimming down the 8 checks down to 4 just 2 vertical and 2 diagonal, might do this when I have time). For now this version however already fully works and is pretty nice to play with.
-

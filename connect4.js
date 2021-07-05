@@ -138,20 +138,14 @@ function checkDirection(player, start_row, start_col, dx, dy){
   return true;
 }
 
+
 function checkPlayerWins(player, row, col){
-  if( checkDirection(player, row, col, 0, -1) ) return true; // up win
-  if( checkDirection(player, row, col, 0,  1) ) return true; // down win
+  if( checkDirection(player, row, col,  0, 1) ) return true;  // check vertical wins
+  if( checkDirection(player, row, col,  1, 0 ) ) return true; // check horizonal wins
+  if( checkDirection(player, row, col,  1, 1) ) return true;  // check diagonal 1
+  if( checkDirection(player, row, col, -1, 1) ) return true;  // check diagonal 2
 
-  if( checkDirection(player, row, col, -1, 0) ) return true; // left win
-  if( checkDirection(player, row, col, 1, 0 ) ) return true; // right win
-
-  if( checkDirection(player, row, col, 1, -1) ) return true; // up right win
-  if( checkDirection(player, row, col, 1,  1) ) return true; // down right win
-
-  if( checkDirection(player, row, col, -1, -1) ) return true; // up left win
-  if( checkDirection(player, row, col, -1, 1 ) ) return true; // down left win
-
-  return false; // no winning direction found
+  return false;
 }
 
 
