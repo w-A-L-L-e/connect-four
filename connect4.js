@@ -4,7 +4,7 @@ let currentPlayer = 1
 let gameOver = false
 let winAnimating = false;
 
-let bs = [
+let boardState = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
@@ -31,17 +31,17 @@ function showCurrentPlayer(){
 }
 
 function resetGame(){
-  for(var i=0;i<ROWS;i++){
-    for(var j=0;j<COLS;j++){
-      bs[i][j]=0;
-      currentPlayer=1;
+  for(let i=0;i<ROWS;i++){
+    for(let j=0;j<COLS;j++){
+      boardState[i][j] = 0;
+      currentPlayer = 1;
       setCellClass(i, j, "cell")
       setStatus("");
     }
   }
 
-  gameOver=false;
-  winAnimating=false;
+  gameOver = false;
+  winAnimating = false;
   currentPlayer = Math.ceil(Math.random()*2)
   showCurrentPlayer()
 }
@@ -56,7 +56,7 @@ function blinkWin(player, row, col, dx, dy){
     }
   }, 400)
 
-  //turn winning cells on
+  // turn winning cells on
   r=row, c=col;
   setTimeout(()=>{
     let r=row, c=col;
@@ -68,7 +68,7 @@ function blinkWin(player, row, col, dx, dy){
 }
 
 function blinkEntireBoard(){
-  //clear board
+  // clear onscreen board
   setTimeout(()=>{
     for(let i=0; i<ROWS; i++){
       for(let j=0; j<COLS; j++){
@@ -78,61 +78,62 @@ function blinkEntireBoard(){
   }, 400);
 
 
-  //set board back to boardstate bs
+  // make screen board same as boardState again
   setTimeout(()=>{
     for(let i=0; i<ROWS; i++){
       for(let j=0; j<COLS; j++){
 
-        if(bs[i][j]>0) setCellClass(i, j, "cell player"+bs[i][j] )
+        if(boardState[i][j]>0) setCellClass(i, j, "cell player"+boardState[i][j] )
       }
     } 
   }, 800);
 }
 
 
-function checkDirection(player, start_row, start_col, dx, dy){
-  let count=0;
-  let row = start_row;
-  let col = start_col;
+function checkEndingString(player, row, col){
+    //check bounds
+    if( (col<0) || (row<0) ) return true;
+    if( (col>=COLS) || (row>=ROWS) ) return true;
+     
+    //check same color as player color
+    if( boardState[row][col] != player ) return true;
+
+    return false;
+}
+
+function checkDirection(player, row, col, dx, dy){
 
   // first walk in opposite direction to beginning of a string
-  let prow, pcol;
+  let prevRow, prevCol;
   while(true){
-    prow=row;
-    pcol=col;
+    prevRow = row;
+    prevCol = col;
 
-    row-=dx;
-    col-=dy;
+    row -= dx;
+    col -= dy;
 
     // reach different color, or out of bounds, break
-    if((col<0)||(row<0)) break;
-    if((col>=COLS)||(row>=ROWS)) break;
-    if( bs[row][col] != player ) break;
+    // so we can count the total length of same color cells
+    if( checkEndingString(player, row, col) ) break;
   }
 
   // get last good pos at beginning of string
-  row=prow;
-  col=pcol;
+  row = prevRow;
+  col = prevCol;
 
   // now see if we have 4 in a row, exit if we hit wall or go out of bounds
-  for(count=1;count<4;count++){
+  for(let count=1; count<4; count++){
     row += dx;
     col += dy;
-
-    //check bounds
-    if((col<0)||(row<0)) return false;
-    if((col>=COLS)||(row>=ROWS)) return false;
-     
-    //check same color as player color
-    if( bs[row][col]!=player ) return false;
+    if( checkEndingString(player, row, col) ) return false
   }
 
   // we've found 4 successive cells with player color in a row
   // blink the winning string
   winAnimating = true;
-  setTimeout( ()=>{blinkWin(player, prow, pcol, dx, dy)}, 10 )
-  setTimeout( ()=>{blinkWin(player, prow, pcol, dx, dy)}, 1000 )
-  setTimeout( ()=>{blinkWin(player, prow, pcol, dx, dy)}, 2000 )
+  setTimeout( ()=>{blinkWin(player, prevRow, prevCol, dx, dy)}, 10 )
+  setTimeout( ()=>{blinkWin(player, prevRow, prevCol, dx, dy)}, 1000 )
+  setTimeout( ()=>{blinkWin(player, prevRow, prevCol, dx, dy)}, 2000 )
   setTimeout( ()=>{winAnimating=false}, 3000 ); // after 4 seconds animation is done
 
   return true;
@@ -141,7 +142,7 @@ function checkDirection(player, start_row, start_col, dx, dy){
 
 function checkPlayerWins(player, row, col){
   if( checkDirection(player, row, col,  0, 1) ) return true;  // check vertical wins
-  if( checkDirection(player, row, col,  1, 0 ) ) return true; // check horizonal wins
+  if( checkDirection(player, row, col,  1, 0) ) return true;  // check horizonal wins
   if( checkDirection(player, row, col,  1, 1) ) return true;  // check diagonal 1
   if( checkDirection(player, row, col, -1, 1) ) return true;  // check diagonal 2
 
@@ -150,9 +151,9 @@ function checkPlayerWins(player, row, col){
 
 
 function checkFullBoard(){
-  for(var i=0;i<ROWS;i++){
-    for(var j=0;j<COLS;j++){
-      if( bs[i][j]==0 ) return false;
+  for(let i=0;i<ROWS;i++){
+    for(let j=0;j<COLS;j++){
+      if( boardState[i][j]==0 ) return false;
     }
   }
 
@@ -161,7 +162,6 @@ function checkFullBoard(){
 
 
 function clickColumn(col){
-  console.log("column clicked=", col)
   if(winAnimating){
     console.log("ignoring clicks!")
     return; //ignore clicks until animation is done
@@ -173,9 +173,9 @@ function clickColumn(col){
   }
 
   let foundEmpty=false;
-  for(let row=5;row>=0;row--){
-    if(bs[row][col]==0){
-      bs[row][col] = currentPlayer;
+  for(let row=5; row>=0; row--){
+    if( boardState[row][col] == 0 ){
+      boardState[row][col] = currentPlayer;
       setCellClass(row, col, "cell player"+currentPlayer)
       foundEmpty = true;
       gameOver = checkPlayerWins(currentPlayer, row, col)
@@ -197,11 +197,9 @@ function clickColumn(col){
     setStatus("It's a tie! You are both winners ;)")
     gameOver = true;
     winAnimating = true;
-    
     setTimeout(()=>{blinkEntireBoard()}, 500);
     setTimeout(()=>{blinkEntireBoard()}, 1500);
     setTimeout(()=>{blinkEntireBoard()}, 2500);
-
     setTimeout(()=>{winAnimating=false}, 3000);
   }
 
@@ -218,7 +216,7 @@ function addCol(board, col_index){
   let col = document.createElement("div")
   col.classList.add("column")
   board.appendChild(col)
-  col.onclick = ()=>{clickColumn(col_index)}
+  col.onclick = ()=>{ clickColumn(col_index) }
   return col
 }
 
@@ -229,7 +227,7 @@ function addCell(coldiv, row, col){
   coldiv.appendChild(cell)
 }
 
-function create_board(){
+function createBoard(){
   let game = document.getElementById("game")
   let board = document.createElement("div")
   board.classList.add("board")
@@ -245,5 +243,6 @@ function create_board(){
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-  create_board()
+  createBoard()
 })
+
