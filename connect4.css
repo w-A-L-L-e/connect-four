@@ -1,6 +1,13 @@
+/* 
+ * restyled with coolors.co 
+ *  blue:   #FFC857
+ *  yellow: #FFC857
+ *  red:    #C5283D
+ *  background: #16151d;
+ * */
 body {
   background-color: #16151d;
-  color: blue;
+  color: #255F85;
   margin: auto;
 }
 
@@ -45,15 +52,18 @@ body {
   margin-right: auto;
   text-align: center;
   width: 710px;
+  background-color: #255F85;
+  padding-left: 10px;
+  border-radius: 10px;
 }
 
 
 .column {
-  padding-top: 15px;
+  padding-top: 20px;
   width: 100px;
   height: 590px;
   float: left;
-  background-color: blue;
+  background-color: #255F85;
 }
 
 .cell {
@@ -63,15 +73,15 @@ body {
   border-radius: 50%;
   margin-left: 4px;
   margin-top: 4px;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 .cell.player1 {
-  background-color: #ce1313;
+  background-color: #C5283D;
 }
 
 .cell.player2 {
-  background-color: #ffe001;
+  background-color: #FFC857;
 }
 
 
